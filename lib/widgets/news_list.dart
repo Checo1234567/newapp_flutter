@@ -36,8 +36,53 @@ class _NewsData extends StatelessWidget {
         ),
         _TitleCard(article: article),
         _ImageCard(article: article),
+        _BodyCard(article: article),
+        _ButtonsCard(),
+        const SizedBox(height: 10),
+        const Divider(),
       ],
     );
+  }
+}
+
+class _ButtonsCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          RawMaterialButton(
+            onPressed: () {},
+            fillColor: Colors.amber,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: const Icon(Icons.star_border),
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+          RawMaterialButton(
+            onPressed: () {},
+            fillColor: Colors.blue,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: const Icon(Icons.star_border),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BodyCard extends StatelessWidget {
+  final Article article;
+
+  const _BodyCard({required this.article});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text((article.description != null) ? article.description! : '');
   }
 }
 
@@ -48,13 +93,20 @@ class _ImageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: (article.urlToImage != null)
-            ? FadeInImage(
-                placeholder:
-                    const AssetImage('assets/images/circle-loading.gif'),
-                image: NetworkImage(article.urlToImage!),
-              )
-            : const Image(image: AssetImage('assets/images/no-image.png')));
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(50), bottomRight: Radius.circular(50)),
+        child: Container(
+            child: (article.urlToImage != null)
+                ? FadeInImage(
+                    placeholder:
+                        const AssetImage('assets/images/circle-loading.gif'),
+                    image: NetworkImage(article.urlToImage!),
+                  )
+                : const Image(image: AssetImage('assets/images/no-image.png'))),
+      ),
+    );
   }
 }
 
